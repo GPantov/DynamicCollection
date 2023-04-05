@@ -1,0 +1,103 @@
+<div style="display: block">
+  <ng-container>
+    <p-card header="Add New Object" style="width: 100%">
+      <div style="align-self: flex-end">
+        <p-button label="Add Field" (onClick)="addField()"></p-button>
+      </div>
+    </p-card>
+    <div content>
+      <div class="grid mb-3">
+        <div class="col-4 text-center">
+          <h4>Enter Name For The Object</h4>
+        </div>
+        <div class="col-8 text-center">
+          <input type="text" pInputText [(ngModel)]="objectName"/>
+        </div>
+      </div>
+      <div class="grid mb-3">
+        <div class="col-4 text-center">
+          <h4>Enter Note For The Object</h4>
+        </div>
+        <div class="col-8 text-center">
+          <input type="text" pInputText [(ngModel)]="note"/>
+        </div>
+      </div>
+    </div>
+    <div class="grid mb-3" *ngIf="manualFields.length > 0">
+      <p-divider></p-divider>
+      <div class="col-4 text-center">
+        <h3>Manuel Fields</h3>
+      </div>
+    </div>
+    <ng-container *ngIf="manualFields && manualFields.length">
+      <div class="col-12 xl:col-8 lg:col-6">
+        <div class="field" *ngFor="let field of manualFields">
+          <h4>{{field.name}}</h4>
+          <div *ngIf="field.type === 'Text'">
+            <input type="text" pInputText (change)="updateManuelFields($event, field)"/>
+          </div>
+          <div *ngIf="field.type === 'Date'">
+            <p-calendar (onSelect)="updateManuelFields($event, field)" dateFormat="'dd-mm-yy'"></p-calendar>
+          </div>
+          <div *ngIf="field.type === 'Boolean'">
+            <p-toggleButton (onChange)="updateManuelFields($event, field)" onLabel="Yes" offLabel="No"></p-toggleButton>
+          </div>
+          <div *ngIf="field.type === 'url'">
+            <input type="text" pInputText (change)="updateManuelFields($event, field)"/>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <p-divider></p-divider>
+    <div class="grid" style="display: flex;">
+      <div class="col-12 buttons-row">
+        <p-button
+          styleClass="p-button-success"
+          [disabled]="objectName === '' || note === ''"
+          [label]="'Create Object'"
+          (click)="createObject()">
+        </p-button>
+        <p-button
+          styleClass="p-button-danger"
+          [label]="'Clear'"
+          (click)="clear()">
+        </p-button>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<p-dialog header="Add New Field" [(visible)]="visible" [style]="{ width: '50vw', height: '400px'}" [draggable]="false"
+          [resizable]="false">
+  <div class="pb-5 px-5" content>
+    <div class="grid" style="display: flex;">
+      <div class="col-12 text-center">
+        <label>Enter The Name Of The New Field</label>
+        <input type="text" pInputText [(ngModel)]="name"/>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="grid" style="display: flex;">
+      <div class="col-12">
+        <label>Select The Type Of The New Field</label>
+        <p-dropdown [options]="types" [(ngModel)]="selectedType" optionLabel="label"></p-dropdown>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="grid" style="display: flex;">
+      <div class="col-12 buttons-row">
+        <p-button
+          styleClass="p-button-success"
+          [disabled]="name === ''"
+          [label]="'Submit'"
+          (click)="submit()">
+        </p-button>
+      </div>
+      <p-button
+        styleClass="p-button-danger"
+        [label]="'Cancel'"
+        (click)="cancel()">
+      </p-button>
+    </div>
+  </div>
+</p-dialog>
+
