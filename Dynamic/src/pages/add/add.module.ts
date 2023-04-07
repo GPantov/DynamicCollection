@@ -12,6 +12,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import {DividerModule} from 'primeng/divider';
+import {AppService} from '../../app/app.service';
 
 
 @NgModule({
@@ -27,13 +28,16 @@ import {DividerModule} from 'primeng/divider';
     CalendarModule,
     InputNumberModule,
     ToggleButtonModule,
-    DividerModule
+    DividerModule,
   ],
   exports: [
     AddComponent,
   ],
   declarations: [
     AddComponent,
+  ],
+  providers: [
+    AppService
   ]
 })
 export class AddModule {}

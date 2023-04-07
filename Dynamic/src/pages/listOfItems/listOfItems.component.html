@@ -1,0 +1,80 @@
+<div>
+  <p-table [columns]="cols" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col.field === 'info' || col.field === 'delete' || col.field === 'url'; else others">
+            <p-button *ngIf="col.field === 'info'"
+                      icon="pi pi-check"
+                      styleClass="p-button-success"
+                      type="button"
+                      (click)="checkItem(rowData)">
+            </p-button>
+            <p-button *ngIf="col.field === 'delete'"
+                      icon="pi pi-times"
+                      styleClass="p-button-danger"
+                      type="button"
+                      (click)="removeItem(rowData)">
+            </p-button>
+            <div *ngIf="col.field === 'url'">
+              <img [src]="rowData.url" width="100" class="shadow-4"/>
+            </div>
+          </ng-container>
+          <ng-template #others> {{ rowData[col.field] }}</ng-template>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Edit Object" [(visible)]="visible" [style]="{ width: 'auto', height: 'auto'}" [draggable]="false"
+          [resizable]="false">
+  <p-divider></p-divider>
+  <div class="grid" style="display: block;">
+    <div style="display: flex;">
+      <div class="p-fieldset">
+        <label>Name: </label>
+        <input type="text" pInputText [(ngModel)]="selectedRow.name"/>
+      </div>
+      <div class="p-fieldset">
+        <label>Note: </label>
+        <input type="text" pInputText [(ngModel)]="selectedRow['note']"/>
+      </div>
+      <div class="p-fieldset">
+        <input type="text" pInputText [(ngModel)]="selectedRow.url"/>
+        <img [src]="selectedRow.url" width="100" class="shadow-4"/>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="field" *ngFor="let field of selectedRow['manuelFields']">
+      <label> {{field.name}} </label>
+      <div *ngIf="field.type === 'Text'">
+        <input type="text" pInputText [(ngModel)]="field.value"/>
+      </div>
+      <div *ngIf="field.type === 'Boolean'">
+        <p-toggleButton (onChange)="updateManuelFields($event, field)" onLabel="Yes" offLabel="No" [(ngModel)]="field.value"></p-toggleButton>
+      </div>
+      <div *ngIf="field.type === 'Date'">
+        <p-calendar (onSelect)="updateManuelFields($event, field)" [(ngModel)]="field.value"></p-calendar>
+      </div>
+      <p-divider></p-divider>
+    </div>
+    <p-button
+      styleClass="p-button-success"
+      [label]="'Submit'"
+      (click)="submit()">
+    </p-button>
+    <p-button
+      styleClass="p-button-danger"
+      [label]="'Cancel'"
+      (click)="close()">
+    </p-button>
+  </div>
+</p-dialog>

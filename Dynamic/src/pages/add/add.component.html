@@ -1,6 +1,6 @@
 <div style="display: block">
   <ng-container>
-    <p-card header="Add New Object" style="width: 100%">
+    <p-card header="Add New Object">
       <div style="align-self: flex-end">
         <p-button label="Add Field" (onClick)="addField()"></p-button>
       </div>
@@ -37,7 +37,7 @@
             <input type="text" pInputText (change)="updateManuelFields($event, field)"/>
           </div>
           <div *ngIf="field.type === 'Date'">
-            <p-calendar (onSelect)="updateManuelFields($event, field)" dateFormat="'dd-mm-yy'"></p-calendar>
+            <p-calendar (onSelect)="updateManuelFields($event, field)"></p-calendar>
           </div>
           <div *ngIf="field.type === 'Boolean'">
             <p-toggleButton (onChange)="updateManuelFields($event, field)" onLabel="Yes" offLabel="No"></p-toggleButton>
