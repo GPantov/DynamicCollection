@@ -58,23 +58,76 @@
       <div *ngIf="field.type === 'Text'">
         <input type="text" pInputText [(ngModel)]="field.value"/>
       </div>
+      <div *ngIf="field.type === 'Number'">
+        <input type="text" pInputText
+               [(ngModel)]="field.value" [pKeyFilter]="'int'"
+               (keyup)="updateManuelFields($event, field)"/>
+      </div>
       <div *ngIf="field.type === 'Boolean'">
-        <p-toggleButton (onChange)="updateManuelFields($event, field)" onLabel="Yes" offLabel="No" [(ngModel)]="field.value"></p-toggleButton>
+        <p-toggleButton (onChange)="updateManuelFields($event, field)" onLabel="Yes" offLabel="No"
+                        [(ngModel)]="field.value"></p-toggleButton>
       </div>
       <div *ngIf="field.type === 'Date'">
         <p-calendar (onSelect)="updateManuelFields($event, field)" [(ngModel)]="field.value"></p-calendar>
       </div>
       <p-divider></p-divider>
     </div>
+    <div *ngIf="selectedRow['totalFunctionality']">
+      <h4>Total: {{total}}</h4>
+      <p-divider></p-divider>
+    </div>
+    <div style="justify-content: space-between; display: flex; width: 50%">
+      <p-button *ngIf="selectedRow['listForPrint']"
+                styleClass="p-button-success"
+                [label]="'Pick Fields For Total'"
+                (click)="displayFieldsForPick()">
+      </p-button>
+      <p-button *ngIf="selectedRow['totalFunctionality']"
+        styleClass="p-button-success"
+        [label]="'Pick Fields For Total'"
+        (click)="showTotal()">
+      </p-button>
+      <p-button
+        styleClass="p-button-success"
+        [label]="'Submit'"
+        (click)="submit()">
+      </p-button>
+      <p-button
+        styleClass="p-button-danger"
+        [label]="'Cancel'"
+        (click)="close()">
+      </p-button>
+    </div>
+  </div>
+</p-dialog>
+<p-dialog header="Pick Rows To Add To Total" [(visible)]="displayTotal" [style]="{ width: 'auto', height: '400px'}" >
+  <div class="card flex justify-content-center">
+    <p-multiSelect [options]="totalOptions" [(ngModel)]="selectedRows" optionLabel="name"></p-multiSelect>
     <p-button
       styleClass="p-button-success"
-      [label]="'Submit'"
-      (click)="submit()">
+      [label]="'Add Total'"
+      (click)="addTotal()">
     </p-button>
+  </div>
+</p-dialog>
+<p-dialog header="Pick Rows To Add To Total" [(visible)]="displayFieldsForDisplay" [style]="{ width: 'auto', height: '400px'}" >
+  <div class="card flex justify-content-center">
+    <div>
+      <label>Select Headers</label>
+      <p-multiSelect [options]="selectedRow['manuelFields']" [(ngModel)]="selectedHeader" optionLabel="name"></p-multiSelect>
+    </div>
+    <div>
+      <label>Select List</label>
+      <p-multiSelect [options]="selectedRow['manuelFields']" [(ngModel)]="selectedList" optionLabel="name"></p-multiSelect>
+    </div>
+    <div>
+      <label>Add Text</label>
+      <input type="text" pInputText [(ngModel)]="addText"/>
+    </div>
     <p-button
-      styleClass="p-button-danger"
-      [label]="'Cancel'"
-      (click)="close()">
+      styleClass="p-button-success"
+      [label]="'Create File'"
+      (click)="createFile()">
     </p-button>
   </div>
 </p-dialog>

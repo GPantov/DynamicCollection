@@ -12,6 +12,9 @@ import {InputTextModule} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import {CalendarModule} from 'primeng/calendar';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {KeyFilterModule} from 'primeng/keyfilter';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 
 
@@ -27,6 +30,8 @@ import {CalendarModule} from 'primeng/calendar';
     FormsModule,
     ToggleButtonModule,
     CalendarModule,
+    KeyFilterModule,
+    MultiSelectModule,
   ],
   exports: [
     ListOfItemsComponent,

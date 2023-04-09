@@ -23,6 +23,18 @@
         </div>
       </div>
     </div>
+    <div class="col-4 text-center">
+      <h4>Add Total Functionality</h4>
+    </div>
+    <div class="col-8 text-center">
+      <p-toggleButton [(ngModel)]="totalFunctionality" onLabel="Yes" offLabel="No"></p-toggleButton>
+    </div>
+    <div class="col-4 text-center">
+      <h4>Add Print Functionality</h4>
+    </div>
+    <div class="col-8 text-center">
+      <p-toggleButton [(ngModel)]="listForPrint" onLabel="Yes" offLabel="No"></p-toggleButton>
+    </div>
     <div class="grid mb-3" *ngIf="manualFields.length > 0">
       <p-divider></p-divider>
       <div class="col-4 text-center">
@@ -35,6 +47,11 @@
           <h4>{{field.name}}</h4>
           <div *ngIf="field.type === 'Text'">
             <input type="text" pInputText (change)="updateManuelFields($event, field)"/>
+          </div>
+          <div *ngIf="field.type === 'Number'">
+            <input type="text"  pInputText
+                   [(ngModel)]="field.value" [pKeyFilter]="'int'"
+                   (keyup)="updateManuelFields($event, field)" />
           </div>
           <div *ngIf="field.type === 'Date'">
             <p-calendar (onSelect)="updateManuelFields($event, field)"></p-calendar>

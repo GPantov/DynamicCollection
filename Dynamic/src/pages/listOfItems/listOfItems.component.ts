@@ -8,11 +8,19 @@ import {AppService} from '../../app/app.service';
 })
 export class ListOfItemsComponent implements OnInit {
 
-  public products: Object[] = []
+  public products: Object[] = [];
   public cols: any[] = [];
   public selectedRow: any = {};
+  public selectedRows: any[] = [];
+  public selectedList: any[] = [];
+  public selectedHeader: any[] = [];
+  public totalOptions: any[] = [];
+  public total = 0;
+  public addText = '';
 
   public visible = false;
+  public displayTotal = false;
+  public displayFieldsForDisplay = false;
   public Object = Object;
 
   constructor(private service: AppService) {
@@ -53,5 +61,50 @@ export class ListOfItemsComponent implements OnInit {
     } else if (field.type === 'url') {
       field.value = event.target.value;
     }
+  }
+  showTotal() {
+      this.total = 0;
+      this.displayTotal = true;
+      this.totalOptions = this.selectedRow['manuelFields'].filter((x) => x.type === 'Number');
+  }
+  addTotal() {
+   this.selectedRows.forEach((x) => {
+      this.total += +x.value;
+    })
+   this.displayTotal = false;
+  }
+  displayFieldsForPick() {
+    this.displayFieldsForDisplay = true;
+  }
+  createFile() {
+    let oData: Object[] = [];
+
+    this.selectedHeader.forEach((x) => {
+      let tempObj = {
+        [x.name]:  x.value,
+      };
+      oData = [...oData, tempObj]
+    });
+    this.selectedList.forEach((x) => {
+      let tempObj = {
+        [x.name]:  x.value,
+      };
+      oData = [...oData, tempObj]
+    });
+    oData = [...oData, this.addText]
+
+    this.saveText(JSON.stringify(oData));
+  }
+
+
+  saveText(text): void {
+    let a = document.createElement('a');
+    a.setAttribute('href', `data:text/plain;charset=utf-u,${encodeURIComponent(text)}`);
+    a.setAttribute('download', this.selectedRow.name + '.txt');
+    a.click();
+    this.selectedList = [];
+    this.selectedHeader = [];
+    this.addText = '';
+    this.displayFieldsForDisplay = false;
   }
 }

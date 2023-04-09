@@ -13,23 +13,25 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import {DividerModule} from 'primeng/divider';
 import {AppService} from '../../app/app.service';
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ButtonModule,
-    DialogModule,
-    BrowserAnimationsModule,
-    InputTextModule,
-    FormsModule,
-    DropdownModule,
-    CardModule,
-    CalendarModule,
-    InputNumberModule,
-    ToggleButtonModule,
-    DividerModule,
-  ],
+    imports: [
+        CommonModule,
+        ButtonModule,
+        DialogModule,
+        BrowserAnimationsModule,
+        InputTextModule,
+        FormsModule,
+        DropdownModule,
+        CardModule,
+        CalendarModule,
+        InputNumberModule,
+        ToggleButtonModule,
+        DividerModule,
+        KeyFilterModule,
+    ],
   exports: [
     AddComponent,
   ],

@@ -43,6 +43,8 @@ export class AppComponent implements OnInit {
         url: 'https://freesvg.org/img/BeagleBros-Apple-IIGS.png',
         info: '',
         delete: '',
+        totalFunctionality: false,
+        listForPrint: false,
         manuelFields: []
       },
       {
@@ -51,6 +53,8 @@ export class AppComponent implements OnInit {
         url: 'https://www.futurity.org/wp/wp-content/uploads/2022/07/sand-shortage-1600.jpg',
         info: '',
         delete: '',
+        totalFunctionality: false,
+        listForPrint: false,
         manuelFields: []
       },
     ]

@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppService} from '../../app/app.service';
 import {Observable, Subscription} from 'rxjs';
 import * as moment from 'moment';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'add',
@@ -18,13 +19,19 @@ export class AddComponent implements OnInit, OnDestroy {
   public selectedType = {label: '', value: ''};
   public textField = '';
   public manualFields: any[] = [];
+  public totalFunctionality = false;
+  public listForPrint = false;
 
 
   private dataSubs: Subscription = Subscription.EMPTY;
   private data$: Observable<[]>;
   public data: Object[] = [];
 
-  constructor(private service: AppService) {
+  constructor(
+    private service: AppService,
+    private router: Router,
+
+  ) {
     this.data$ = this.service.getAllData();
   }
 
@@ -42,6 +49,10 @@ export class AddComponent implements OnInit, OnDestroy {
         {
           label: 'Text',
           value: 'Text',
+        },
+        {
+          label: 'Number',
+          value: 'Number',
         },
         {
           label: 'Date',
@@ -77,8 +88,7 @@ export class AddComponent implements OnInit, OnDestroy {
     this.name = '';
   }
   updateManuelFields(event: any, field: any) {
-    console.log(field)
-    if (field.type === 'Text') {
+    if (field.type === 'Text' || field.type === 'Number') {
       field.value = event.target.value;
     } else if (field.type === 'Date'){
       field.value = event;
@@ -95,10 +105,13 @@ export class AddComponent implements OnInit, OnDestroy {
       url: '',
       info: '',
       delete: '',
+      totalFunctionality: this.totalFunctionality,
+      listForPrint: this.listForPrint,
       manuelFields: this.manualFields
     }
     this.data = [...this.data, newObject];
     this.service.setAllData(this.data);
+    this.router.navigate(['']);
   }
   clear() {
     this.objectName = '';
